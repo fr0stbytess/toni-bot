@@ -1,5 +1,6 @@
 import discord
 import requests as r
+
 from sys import exit
 from os import system
 from json import load, dump
@@ -28,7 +29,7 @@ class Application(discord.Client):
 
     async def on_message(self, message):
         """Checks if website is operational by pinging it"""
-        if message.content == "!status":
+        if message.content.startswith == "!status":
             await message.channel.send("Wait a moment, let me check.")
             status = system("ping lcroleplay.com")
             if not status:
