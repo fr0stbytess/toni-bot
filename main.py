@@ -16,7 +16,6 @@ class Application(discord.Client):
     """Core class for core modules managements"""
 
     async def on_ready(self):
-        await self.clear_screen()
         print("Initialized client as ", self.user)
         try:
             game = discord.Game(data["status"])
