@@ -26,9 +26,6 @@ class Application(discord.Client):
             print("something went wrong.")
             exit()
 
-    async def clear_screen(self):
-        """Cleans the terminal"""
-        system("cls")
 
     async def on_message(self, message):
         """Checks if website is operational by pinging it"""
