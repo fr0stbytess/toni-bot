@@ -5,6 +5,7 @@ from sys import exit
 from os import system
 from json import load, dump
 from geopy.geocoders import Nominatim
+from pythonping import ping
 
 try:
     with open("data/settings.json", "r") as f:
@@ -28,22 +29,18 @@ class Application(discord.Client):
 
 
     async def on_message(self, message):
-        """Checks if website is operational by pinging it"""
         if message.content.startswith("!status"):
             await message.channel.send("Wait a moment, let me check.")
-            status = system("ping lcroleplay.com")
+            status = ping("lcroleplay.com", verbose=True)
             if not status:
                 await message.channel.send("Website is operational.")
             else:
                 await message.channel.send(
                     "Website seems to be having connectivity issues.")
 
-
-    async def on_message(self, message):
-        """Retrieve weather info from darksky API"""
         if message.content.startswith("!weather"):
             locate = "New York City"
-            geolocator = Nominatim(user_agent="Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)")
+            geolocator = Nominatim(user_agent="Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36")
             location = geolocator.geocode(locate)
             weather = r.get("https://api.darksky.net/forecast/abe6a84811a8ab8f1f39cd9b8b8f40e1/{},{}".format(location.latitude, location.longitude))
             with open("data/weather.json", "w") as f:
