@@ -1,3 +1,7 @@
+"""This is the core file of our Discord bot
+   Claude."""
+
+
 import discord
 import requests as r
 
@@ -7,15 +11,17 @@ from json import load, dump
 from geopy.geocoders import Nominatim
 from pythonping import ping
 
+from modules import components
+
 try:
     with open("data/settings.json", "r") as f:
         data = load(f)
-except:
+except Exception:
     print("Error")
 
 
 class Application(discord.Client):
-    """Core class for core modules managements"""
+    """Core class for core processing"""
 
     async def on_ready(self):
         print("Initialized client as ", self.user)
@@ -23,10 +29,9 @@ class Application(discord.Client):
             game = discord.Game(data["status"])
             status = discord.Status.idle
             await claude.change_presence(status=status, activity=game)
-        except:
+        except Exception:
             print("something went wrong.")
             exit()
-
 
     async def on_message(self, message):
         if message.content.startswith("!status"):
@@ -40,15 +45,18 @@ class Application(discord.Client):
 
         if message.content.startswith("!weather"):
             locate = "New York City"
-            geolocator = Nominatim(user_agent="Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36")
+            geolocator = Nominatim(
+                user_agent=components.user_agent)
             location = geolocator.geocode(locate)
-            weather = r.get("https://api.darksky.net/forecast/abe6a84811a8ab8f1f39cd9b8b8f40e1/{},{}".format(location.latitude, location.longitude))
+            weather = r.get(components.darksky_line.format(
+                location.latitude, location.longitude))
             with open("data/weather.json", "w") as f:
                 weather_data = dump(weather.json(), f, indent=4)
             with open("data/weather.json", "r+") as weather:
                 weather_data = load(weather)
-            await message.channel.send("LC Weather: {}".format(weather_data["currently"]["summary"]))
-
+            await message.channel.send(
+                "LC Weather: {}".format(weather_data["currently"]["summary"]
+                                        ))
 
 
 claude = Application()
