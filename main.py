@@ -36,7 +36,7 @@ class Application(discord.Client):
         if message.content.startswith("!status"):
             await message.channel.send("Wait a moment, let me check.")
             try:
-                r.get("lcroleplay.com")
+                r.get("https://lcroleplay.com/", verify=False)
             except ConnectionError:
                 await message.channel.send("Website is not working.")
             await message.channel.send("Website is working fine.")
