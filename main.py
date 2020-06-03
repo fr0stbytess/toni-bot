@@ -9,7 +9,6 @@ from sys import exit
 from os import system
 from json import load, dump
 from geopy.geocoders import Nominatim
-from pythonping import ping
 
 from modules import components
 
@@ -36,12 +35,11 @@ class Application(discord.Client):
     async def on_message(self, message):
         if message.content.startswith("!status"):
             await message.channel.send("Wait a moment, let me check.")
-            status = ping("lcroleplay.com", verbose=True)
-            if not status:
-                await message.channel.send("Website is operational.")
-            else:
-                await message.channel.send(
-                    "Website seems to be having connectivity issues.")
+            try:
+                r.get("lcroleplay.com")
+            except ConnectionError:
+                await message.channel.send("Website is not working.")
+            await message.channel.send("Website is working fine.")
 
         if message.content.startswith("!weather"):
             locate = "New York City"
