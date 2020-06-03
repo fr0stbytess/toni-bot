@@ -6,7 +6,6 @@ import discord
 import requests as r
 
 from sys import exit
-from os import system
 from json import load, dump
 from geopy.geocoders import Nominatim
 
@@ -37,9 +36,13 @@ class Application(discord.Client):
             await message.channel.send("Wait a moment, let me check.")
             try:
                 r.get("https://lcroleplay.com/", verify=False)
-            except ConnectionError:
-                await message.channel.send("Website is not working.")
-            await message.channel.send("Website is working fine.")
+                await message.channel.send("Website is working fine.")
+            except r.exceptions.ConnectionError as conn_e:
+                await message.channel.send("Error: {}".format(conn_e))
+            except r.exceptions.HTTPError as http_e:
+                await message.channel.send("Error: {}".format(http_e))
+            except r.exceptions.Timeout as conn_t:
+                await message.channel.send("Error: {}".format(conn_t))
 
         if message.content.startswith("!weather"):
             locate = "New York City"
@@ -49,7 +52,7 @@ class Application(discord.Client):
             weather = r.get(components.darksky_line.format(
                 location.latitude, location.longitude))
             with open("data/weather.json", "w") as f:
-                weather_data = dump(weather.json(), f, indent=4)
+                dump(weather.json(), f, indent=4)
             with open("data/weather.json", "r+") as weather:
                 weather_data = load(weather)
             await message.channel.send(
