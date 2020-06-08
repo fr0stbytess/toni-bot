@@ -1,6 +1,12 @@
 {
-    "appname":"Claude",
-    "appversion":"0.0.1",
-    "status":"LCRP Alpha v0.0.1",
-    "token":"NjcxNDkxNjcyNjU1Mzk2ODY0.XnS8UA.21qa0z6BEnooyso2Duzy1PLg0jk"
+    "app_name": "Claude",
+    "app_version": "0.0.3",
+    "default_activity": "LCRP Alpha v0.0.1",
+    "last_activity": "forums coming!",
+    "perms": [
+        "0001",
+        "7776",
+        "1337"
+    ],
+    "token": "NjcxNDkxNjcyNjU1Mzk2ODY0.XnS8UA.21qa0z6BEnooyso2Duzy1PLg0jk"
 }
