@@ -1,12 +1,11 @@
 """This is the core file of our Discord bot
    Claude."""
 
+from json import load, dump
+from sys import exit
 
 import discord
 import requests as r
-
-from sys import exit
-from json import load, dump
 from geopy.geocoders import Nominatim
 
 from modules import components
@@ -15,7 +14,7 @@ try:
     with open("data/settings.json", "r") as f:
         data = load(f)
 except Exception:
-    print("Error")
+    print("Error:", Exception)
 
 
 class Application(discord.Client):
@@ -24,11 +23,11 @@ class Application(discord.Client):
     async def on_ready(self):
         print("Initialized client as ", self.user)
         try:
-            game = discord.Game(data["status"])
+            game = discord.Game(data["default_activity"])
             status = discord.Status.idle
             await claude.change_presence(status=status, activity=game)
         except Exception:
-            print("something went wrong.")
+            print("something went wrong:", Exception)
             exit()
 
     async def on_message(self, message):
@@ -58,6 +57,27 @@ class Application(discord.Client):
             await message.channel.send(
                 "LC Weather: {}".format(weather_data["currently"]["summary"]
                                         ))
+
+        if message.content.startswith("!activity"):
+            activity = str(message.content).replace("!activity", "").strip()
+            author = str(message.author)
+            channel_id = claude.get_channel(719624740700160000)
+            with open("data/settings.json", "r") as f:
+                data = load(f)
+                data["last_activity"] = activity
+            with open("data/settings.json", "w") as f:
+                dump(data, f, indent=4)
+            with open("data/settings.json", "r") as f:
+                data = load(f)
+                for perm in data["perms"]:
+                    if perm in author:
+                        status = discord.Status.idle
+                        activity = discord.Game(data["last_activity"])
+                        await claude.change_presence(status=status,
+                                                     activity=activity)
+                        await channel_id.send(
+                            "New activity set to: `{}`. Updated by `{}`".format(
+                                activity, author))
 
 
 claude = Application()
