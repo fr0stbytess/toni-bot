@@ -79,6 +79,61 @@ class Application(discord.Client):
                             "New activity set to: `{}`. Updated by `{}`".format(
                                 activity, author))
 
+        if message.content.startswith("!forum"):
+            message_content = str(message.content).replace("!forum",
+                                                           "").strip()
+            headers = {'XF-Api-Key': '6_O190_vSHsXyo5vcJjU4CwmXRwkukag',
+                       'XF-Api-User': "1"}
+            params = {'username': message_content}
+            forum_data = r.get(
+                'http://lcroleplay.com/index.php/api/users/find_name',
+                headers=headers, params=params)
+            with open("data/forum_profile_data.json", "w+") as f:
+                dump(forum_data.json(), f, indent=4)
+            with open("data/forum_profile_data.json", "r+") as f:
+                temp_data = load(f)
+            try:
+                username = temp_data["exact"]["username"]
+                location = temp_data["exact"]["location"]
+                if location == "":
+                    location = "(Empty)"
+                avatar = str(temp_data["exact"]["avatar_urls"]["m"])
+                posts = str(temp_data["exact"]["message_count"])
+                embed_profile_data = discord.Embed(
+                    title=str(username).replace("(", "").replace(")",
+                                                                 "").strip(),
+                    color=0x888db5)
+                embed_profile_data.set_thumbnail(url=avatar)
+                embed_profile_data.add_field(name="Posts", value=str(posts),
+                                             inline=False)
+                embed_profile_data.add_field(name="Location",
+                                             value=str(location).replace("(",
+                                                                         "").replace(
+                                                 ")", "").strip(),
+                                             inline=False)
+                await message.channel.send(embed=embed_profile_data)
+            except TypeError:
+                username = temp_data["recommendations"][0]["username"]
+                location = temp_data["recommendations"][0]["location"]
+                if location == "":
+                    location = "(Empty)"
+                avatar = str(
+                    temp_data["recommendations"][0]["avatar_urls"]["m"])
+                posts = temp_data["recommendations"][0]["message_count"]
+                embed_profile_data_2 = discord.Embed(
+                    title=str(username).replace("(", "").replace(")",
+                                                                 "").strip(),
+                    color=0x888db5)
+                embed_profile_data_2.set_thumbnail(url=avatar)
+                embed_profile_data_2.add_field(name="Posts", value=str(posts),
+                                               inline=False)
+                embed_profile_data_2.add_field(name="Location",
+                                               value=str(location).replace("(",
+                                                                           "").replace(
+                                                   ")", "").strip(),
+                                               inline=False)
+                await message.channel.send(embed=embed_profile_data_2)
+
 
 claude = Application()
 claude.run(data["token"])
