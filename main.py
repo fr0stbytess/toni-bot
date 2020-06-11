@@ -140,6 +140,22 @@ class Application(discord.Client):
             channel = claude.get_channel(657190919535329340)
             await channel.send(process_message)
 
+        if message.content.startswith("!kick"):
+            content = message.content
+            author = message.author
+            channel = claude.get_channel(719624740700160000)
+            process_message = str(content).replace("!kick", "").strip()
+            if components.check_digits(content):
+                try:
+                    kick = claude.get_user(int(process_message))
+                    await message.guild.kick(kick)
+                    await channel.send("kicked {}".format(kick))
+                except Exception as e:
+                    await message.channel.send(
+                        "Failed to kick the user: {}".format(e))
+            else:
+                await message.channel.send("Error occured. No digits?")
+
 
 claude = Application()
 claude.run(data["token"])
