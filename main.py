@@ -136,7 +136,7 @@ class Application(discord.Client):
 
         if message.content.startswith("!say"):
             content = message.content
-            process_message = str(content).replace("!general", "").strip()
+            process_message = str(content).replace("!say", "").strip()
             channel = claude.get_channel(657190919535329340)
             await channel.send(process_message)
 
