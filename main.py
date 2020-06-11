@@ -134,6 +134,12 @@ class Application(discord.Client):
                                                inline=False)
                 await message.channel.send(embed=embed_profile_data_2)
 
+        if message.content.startswith("!say"):
+            content = message.content
+            process_message = str(content).replace("!general", "").strip()
+            channel = claude.get_channel(657190919535329340)
+            await channel.send(process_message)
+
 
 claude = Application()
 claude.run(data["token"])
