@@ -149,7 +149,7 @@ class Application(discord.Client):
                 try:
                     kick = claude.get_user(int(process_message))
                     await message.guild.kick(kick)
-                    await channel.send("kicked {}".format(kick))
+                    await channel.send("{} was kicked by".format(author, kick))
                 except Exception as e:
                     await message.channel.send(
                         "Failed to kick the user: {}".format(e))
