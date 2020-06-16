@@ -21,7 +21,7 @@ class Application(discord.Client):
     """Core class for core processing"""
 
     async def on_ready(self):
-        print("Initialized client as ", self.user)
+        print("Initialized client as: ", self.user)
         try:
             game = discord.Game(data["default_activity"])
             status = discord.Status.idle
@@ -150,12 +150,21 @@ class Application(discord.Client):
                     kick = claude.get_user(int(process_message))
                     await message.guild.kick(kick)
                     await channel.send(
-                        "{} was kicked by".format(author, kick))
+                        "{} was kicked by {}".format(kick, author))
                 except Exception as e:
                     await message.channel.send(
                         "Failed to kick the user: {}".format(e))
             else:
                 await message.channel.send("Error occured. No digits?")
+
+    async def on_member_join(self, member):
+        member = member
+        embed = discord.Embed(title="Welcome to Liberty City Roleplay!")
+        embed.add_field(name="What is Liberty City Roleplay?",
+                        value=str(components.welcome_line), inline=False)
+        embed.add_field(name="Forums",
+                        value="https://lcroleplay.com/index.php", inline=False)
+        await member.send(embed=embed)
 
 
 claude = Application()
