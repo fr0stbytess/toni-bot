@@ -26,8 +26,8 @@ class Application(discord.Client):
             game = discord.Game(data["default_activity"])
             status = discord.Status.idle
             await claude.change_presence(status=status, activity=game)
-        except Exception:
-            print("something went wrong:", Exception)
+        except Exception as e:
+            print("something went wrong:", e)
             exit()
 
     async def on_message(self, message):
@@ -149,7 +149,8 @@ class Application(discord.Client):
                 try:
                     kick = claude.get_user(int(process_message))
                     await message.guild.kick(kick)
-                    await channel.send("{} was kicked by".format(author, kick))
+                    await channel.send(
+                        "{} was kicked by".format(author, kick))
                 except Exception as e:
                     await message.channel.send(
                         "Failed to kick the user: {}".format(e))
