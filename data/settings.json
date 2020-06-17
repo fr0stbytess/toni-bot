@@ -1,8 +1,9 @@
 {
     "app_name": "Claude",
-    "app_version": "0.0.3",
+    "app_version": "0.1.0",
     "default_activity": "LCRP Alpha v0.0.1",
     "last_activity": "forums coming!",
+    "sneakpeek_channel": 722849254317621378,
     "perms": [
         "0001",
         "7776",
