@@ -2,6 +2,7 @@
    Claude."""
 
 from json import load, dump
+from random import choice
 from sys import exit
 
 import discord
@@ -13,8 +14,8 @@ from modules import components
 try:
     with open("data/settings.json", "r") as f:
         data = load(f)
-except Exception:
-    print("Error:", Exception)
+except Exception as e:
+    print("Error:", e)
 
 
 class Application(discord.Client):
@@ -156,6 +157,18 @@ class Application(discord.Client):
                         "Failed to kick the user: {}".format(e))
             else:
                 await message.channel.send("Error occured. No digits?")
+
+        keywords = ["!post_ugmp", "!post_sneakpeek"]
+        for keyword in keywords:
+            if message.content.startswith(str(keyword)):
+                with open("data/sneakpeek_images.json") as sps:
+                    sneakpeeks = load(sps)
+                    random_image = choice(sneakpeeks["sneakpeeks"])
+                with open("data/settings.json") as sp_channel:
+                    sp_channel = load(sp_channel)
+                    channel = claude.get_channel(
+                        sp_channel["sneakpeek_channel"])
+                await channel.send(random_image)
 
     async def on_member_join(self, member):
         member = member
