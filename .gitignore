@@ -1,5 +1,5 @@
 .idea/
-.vscode/settings.json
+.vscode/
 __pycache__
 modules/__pycache__/components.cpython-38.pyc
 data/weather.json
