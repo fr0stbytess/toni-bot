@@ -1,10 +1,8 @@
 """This is the core file of our Discord bot
    Claude."""
 
-from json import load, dump
-from random import choice
-from sys import exit
-
+import json
+import random
 import discord
 import requests as r
 from geopy.geocoders import Nominatim
@@ -13,7 +11,7 @@ from modules import components
 
 try:
     with open("data/settings.json", "r") as f:
-        data = load(f)
+        data = json.load(f)
 except Exception as e:
     print("Error:", e)
 
@@ -52,9 +50,9 @@ class Application(discord.Client):
             weather = r.get(components.darksky_line.format(
                 location.latitude, location.longitude))
             with open("data/weather.json", "w") as f:
-                dump(weather.json(), f, indent=4)
+                json.dump(weather.json(), f, indent=4)
             with open("data/weather.json", "r+") as weather:
-                weather_data = load(weather)
+                weather_data = json.load(weather)
             await message.channel.send(
                 "LC Weather: {}".format(weather_data["currently"]["summary"]
                                         ))
@@ -64,12 +62,12 @@ class Application(discord.Client):
             author = str(message.author)
             channel_id = claude.get_channel(719624740700160000)
             with open("data/settings.json", "r") as f:
-                data = load(f)
+                data = json.load(f)
                 data["last_activity"] = activity
             with open("data/settings.json", "w") as f:
-                dump(data, f, indent=4)
+                json.dump(data, f, indent=4)
             with open("data/settings.json", "r") as f:
-                data = load(f)
+                data = json.load(f)
                 for perm in data["perms"]:
                     if perm in author:
                         status = discord.Status.idle
@@ -90,9 +88,9 @@ class Application(discord.Client):
                 'http://lcroleplay.com/index.php/api/users/find_name',
                 headers=headers, params=params)
             with open("data/forum_profile_data.json", "w+") as f:
-                dump(forum_data.json(), f, indent=4)
+                json.dump(forum_data.json(), f, indent=4)
             with open("data/forum_profile_data.json", "r+") as f:
-                temp_data = load(f)
+                temp_data = json.load(f)
             try:
                 username = temp_data["exact"]["username"]
                 location = temp_data["exact"]["location"]
@@ -162,10 +160,10 @@ class Application(discord.Client):
         for keyword in keywords:
             if message.content.startswith(str(keyword)):
                 with open("data/sneakpeek_images.json") as sps:
-                    sneakpeeks = load(sps)
-                    random_image = choice(sneakpeeks["sneakpeeks"])
+                    sneakpeeks = json.load(sps)
+                    random_image = random.choice(sneakpeeks["sneakpeeks"])
                 with open("data/settings.json") as sp_channel:
-                    sp_channel = load(sp_channel)
+                    sp_channel = json.load(sp_channel)
                     channel = claude.get_channel(
                         sp_channel["sneakpeek_channel"])
                 await channel.send(random_image)
