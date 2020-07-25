@@ -3,6 +3,7 @@
 
 import json
 import random
+
 import discord
 import requests as r
 from geopy.geocoders import Nominatim
