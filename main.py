@@ -76,7 +76,7 @@ class Application(discord.Client):
                         await claude.change_presence(status=status,
                                                      activity=activity)
                         await channel_id.send(
-                            "New activity set to: `{}`. Updated by `{}`".format(
+                            "ბოტის ახალი სტატუსი: `{}`. შეცვალა `{}`".format(
                                 activity, author))
 
         if message.content.startswith("!forum"):
@@ -171,11 +171,11 @@ class Application(discord.Client):
 
     async def on_member_join(self, member):
         member = member
-        embed = discord.Embed(title="Welcome to Liberty City Roleplay!")
-        embed.add_field(name="What is Liberty City Roleplay?",
+        embed = discord.Embed(title="მოგესალმებით Hype Roleplay სერვერზე!")
+        embed.add_field(name="რა არის Hype Roleplay?",
                         value=str(components.welcome_line), inline=False)
-        embed.add_field(name="Forums",
-                        value="https://lcroleplay.com/index.php", inline=False)
+        embed.add_field(name="ფორუმის ლინკი",
+                        value="https://hype.ge/", inline=False)
         await member.send(embed=embed)
 
 
