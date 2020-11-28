@@ -55,8 +55,9 @@ class Application(discord.Client):
             with open("data/weather.json", "r+") as weather:
                 weather_data = json.load(weather)
             await message.channel.send(
-                "თბილისის ამინდი: {}".format(weather_data["currently"]["summary"]
-                                        ))
+                "თბილისის ამინდი: {}".format(
+                    weather_data["currently"]["summary"]
+                    ))
 
         if message.content.startswith("!activity"):
             activity = str(message.content).replace("!activity", "").strip()
@@ -157,7 +158,12 @@ class Application(discord.Client):
             else:
                 await message.channel.send("Error occured. No digits?")
 
-        keywords = ["სერვერი როდის იხსნება", "serveri rodis ixsneba"]
+        keywords = ["სერვერი როდის იხსნება", "serveri rodis ixsneba", "rodis",
+                    "როდის იხსნება სერვერი", "როდის იხსნება", "მალე გაიხსნება",
+                    "მალე გახსნით", "ამთვეში გაიხსნება",
+                    "სერვერს მალე გახსნით", "რამდენი გელოდოთ", "rodis ixsneba",
+                    "male gaixsneba", "amtveshi gaixsneba", "male gaxsnit",
+                    "!so", "ixsneba serveri"]
         for keyword in keywords:
             if message.content.startswith(str(keyword)):
                 await message.channel.send("ჯერჯერობით ზუსტი თარიღი არ "
