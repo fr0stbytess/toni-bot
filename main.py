@@ -15,7 +15,7 @@ try:
     with open("data/settings.json", "r") as f:
         data = json.load(f)
 except Exception as e:
-    print("Error:", e)
+    print("შეცდომა:", e)
 
 
 class Application(discord.Client):
@@ -32,20 +32,20 @@ class Application(discord.Client):
             exit()
 
     async def on_message(self, message):
-        if message.content.startswith("!status"):
-            await message.channel.send("Wait a moment, let me check.")
+        if message.content.startswith("!status" or "!სტატუსი"):
+            await message.channel.send("ერთი წამით, გადავამოწმებ ახლავე.")
             try:
-                r.get("https://lcroleplay.com/", verify=False)
-                await message.channel.send("Website is working fine.")
+                r.get("https://hype.ge/", verify=False)
+                await message.channel.send("საიტი ჩართულია და მუშაობს.")
             except r.exceptions.ConnectionError as conn_e:
-                await message.channel.send("Error: {}".format(conn_e))
+                await message.channel.send("შეცდომა: {}".format(conn_e))
             except r.exceptions.HTTPError as http_e:
-                await message.channel.send("Error: {}".format(http_e))
+                await message.channel.send("შეცდომა: {}".format(http_e))
             except r.exceptions.Timeout as conn_t:
-                await message.channel.send("Error: {}".format(conn_t))
+                await message.channel.send("შეცდომა: {}".format(conn_t))
 
         if message.content.startswith("!weather"):
-            locate = "New York City"
+            locate = "Tbilissi"
             geolocator = Nominatim(
                 user_agent=components.user_agent)
             location = geolocator.geocode(locate)
@@ -56,7 +56,7 @@ class Application(discord.Client):
             with open("data/weather.json", "r+") as weather:
                 weather_data = json.load(weather)
             await message.channel.send(
-                "LC Weather: {}".format(weather_data["currently"]["summary"]
+                "თბილისის ამინდი: {}".format(weather_data["currently"]["summary"]
                                         ))
 
         if message.content.startswith("!activity"):
