@@ -61,7 +61,7 @@ class Application(discord.Client):
         if message.content.startswith("!activity"):
             activity = str(message.content).replace("!activity", "").strip()
             author = str(message.author)
-            channel_id = claude.get_channel(719624740700160000)
+            channel_id = claude.get_channel(782358704438640691)
             with open("data/settings.json", "r") as f:
                 data = json.load(f)
                 data["last_activity"] = activity
