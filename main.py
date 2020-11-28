@@ -5,6 +5,7 @@ import json
 import random
 
 import discord
+import mysql.connector as connector
 import requests as r
 from geopy.geocoders import Nominatim
 
