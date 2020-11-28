@@ -157,17 +157,12 @@ class Application(discord.Client):
             else:
                 await message.channel.send("Error occured. No digits?")
 
-        keywords = ["!post_ugmp", "!post_sneakpeek"]
+        keywords = ["სერვერი როდის იხსნება", "serveri rodis ixsneba"]
         for keyword in keywords:
             if message.content.startswith(str(keyword)):
-                with open("data/sneakpeek_images.json") as sps:
-                    sneakpeeks = json.load(sps)
-                    random_image = random.choice(sneakpeeks["sneakpeeks"])
-                with open("data/settings.json") as sp_channel:
-                    sp_channel = json.load(sp_channel)
-                    channel = claude.get_channel(
-                        sp_channel["sneakpeek_channel"])
-                await channel.send(random_image)
+                await message.channel.send("ჯერჯერობით ზუსტი თარიღი არ "
+                                           "არსებობს, ჩვენი პრიორიტეტია "
+                                           "რეიჯის 1.1 ვერსია გამოვიდეს.")
 
     async def on_member_join(self, member):
         member = member
