@@ -144,17 +144,17 @@ class Application(discord.Client):
         if message.content.startswith("!kick"):
             content = message.content
             author = message.author
-            channel = claude.get_channel(719624740700160000)
+            channel = claude.get_channel(782358704438640691)
             process_message = str(content).replace("!kick", "").strip()
             if components.check_digits(content):
                 try:
                     kick = claude.get_user(int(process_message))
                     await message.guild.kick(kick)
                     await channel.send(
-                        "{} was kicked by {}".format(kick, author))
+                        "{} გაიკიკა {} მიერ.".format(kick, author))
                 except Exception as e:
                     await message.channel.send(
-                        "Failed to kick the user: {}".format(e))
+                        "შეცდომა, მომხმარებელი ვერ გაიკიკა: {}.".format(e))
             else:
                 await message.channel.send("Error occured. No digits?")
 
