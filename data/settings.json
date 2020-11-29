@@ -1,14 +1,12 @@
 {
-    "app_name": "Hype",
+    "app_name": "Claude",
     "app_version": "0.1.4",
-    "default_activity": "Hype v0.0.1",
-    "last_activity": "ძალიან მალე!",
-    "sneakpeek_channel": 722849254317621378,
+    "default_activity": "LCRP v0.0.1",
+    "last_activity": "Playing with frosty!",
     "perms": [
         "0001",
         "7776",
-        "1337",
-        "7777"
+        "1337"
     ],
     "token": "NzgyMzQ5OTIzMDYzODI0NDE0.X8K6JQ.mdQd0b-V_2Zj6hF5PexrDcI4WH8"
 }
