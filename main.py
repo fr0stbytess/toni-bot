@@ -77,7 +77,7 @@ class Application(discord.Client):
                         await claude.change_presence(status=status,
                                                      activity=activity)
                         await channel_id.send(
-                            "ბოტის ახალი სტატუსი: `{}`. შეცვალა `{}`".format(
+                            "ბოტის ახალი სტატუსი: `{}`. შეცვალა: `{}`".format(
                                 activity, author))
 
         if message.content.startswith("!forum"):
