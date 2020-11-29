@@ -150,7 +150,7 @@ class Application(discord.Client):
                     kick = claude.get_user(int(process_message))
                     await message.guild.kick(kick)
                     await channel.send(
-                        "{} გაიკიკა {} მიერ.".format(kick, author))
+                        "KICK LOG: {} was kicked by: {}.".format(kick, author))
                 except Exception as e:
                     await message.channel.send(
                         "Error kicking the user: {}.".format(e))
