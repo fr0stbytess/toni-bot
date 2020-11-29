@@ -31,17 +31,17 @@ class Application(discord.Client):
             exit()
 
     async def on_message(self, message):
-        if message.content.startswith("!status" or "!სტატუსი"):
-            await message.channel.send("ერთი წამით, გადავამოწმებ ახლავე.")
+        if message.content.startswith("!status"):
+            await message.channel.send("Wait a moment, let me check.")
             try:
                 r.get("https://hype.ge/", verify=False)
-                await message.channel.send("საიტი ჩართულია და მუშაობს.")
+                await message.channel.send("Website is on and working fine.")
             except r.exceptions.ConnectionError as conn_e:
-                await message.channel.send("შეცდომა: {}".format(conn_e))
+                await message.channel.send("Error: {}".format(conn_e))
             except r.exceptions.HTTPError as http_e:
-                await message.channel.send("შეცდომა: {}".format(http_e))
+                await message.channel.send("Error: {}".format(http_e))
             except r.exceptions.Timeout as conn_t:
-                await message.channel.send("შეცდომა: {}".format(conn_t))
+                await message.channel.send("Error: {}".format(conn_t))
 
         if message.content.startswith("!weather"):
             locate = "Tbilissi"
