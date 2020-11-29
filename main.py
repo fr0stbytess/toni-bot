@@ -2,7 +2,6 @@
    Claude."""
 
 import json
-import random
 
 import discord
 import requests as r
@@ -14,7 +13,7 @@ try:
     with open("data/settings.json", "r") as f:
         data = json.load(f)
 except Exception as e:
-    print("შეცდომა:", e)
+    print("Error:", e)
 
 
 class Application(discord.Client):
@@ -34,7 +33,7 @@ class Application(discord.Client):
         if message.content.startswith("!status"):
             await message.channel.send("Wait a moment, let me check.")
             try:
-                r.get("https://hype.ge/", verify=False)
+                r.get("https://lcroleplay.com/index.php", verify=False)
                 await message.channel.send("Website is on and working fine.")
             except r.exceptions.ConnectionError as conn_e:
                 await message.channel.send("Error: {}".format(conn_e))
@@ -44,7 +43,7 @@ class Application(discord.Client):
                 await message.channel.send("Error: {}".format(conn_t))
 
         if message.content.startswith("!weather"):
-            locate = "Tbilissi"
+            locate = "New York City"
             geolocator = Nominatim(
                 user_agent=components.user_agent)
             location = geolocator.geocode(locate)
@@ -55,9 +54,9 @@ class Application(discord.Client):
             with open("data/weather.json", "r+") as weather:
                 weather_data = json.load(weather)
             await message.channel.send(
-                "თბილისის ამინდი: {}".format(
+                "Ingame weather right now: {}".format(
                     weather_data["currently"]["summary"]
-                    ))
+                ))
 
         if message.content.startswith("!activity"):
             activity = str(message.content).replace("!activity", "").strip()
@@ -77,7 +76,7 @@ class Application(discord.Client):
                         await claude.change_presence(status=status,
                                                      activity=activity)
                         await channel_id.send(
-                            "ბოტის ახალი სტატუსი: `{}`. შეცვალა: `{}`".format(
+                            "New activity: `{}`. Edited by: `{}`".format(
                                 activity, author))
 
         if message.content.startswith("!forum"):
@@ -154,29 +153,22 @@ class Application(discord.Client):
                         "{} გაიკიკა {} მიერ.".format(kick, author))
                 except Exception as e:
                     await message.channel.send(
-                        "შეცდომა, მომხმარებელი ვერ გაიკიკა: {}.".format(e))
+                        "Error kicking the user: {}.".format(e))
             else:
                 await message.channel.send("Error occured. No digits?")
 
-        keywords = ["სერვერი როდის იხსნება", "serveri rodis ixsneba",
-                    "როდის იხსნება სერვერი", "როდის იხსნება", "მალე გაიხსნება",
-                    "მალე გახსნით", "ამთვეში გაიხსნება",
-                    "სერვერს მალე გახსნით", "რამდენი გელოდოთ", "rodis ixsneba",
-                    "male gaixsneba", "amtveshi gaixsneba", "male gaxsnit",
-                    "!so", "ixsneba serveri"]
+        keywords = ["Null", "Nulled"]
         for keyword in keywords:
             if message.content.startswith(str(keyword)):
-                await message.channel.send("ჯერჯერობით ზუსტი თარიღი არ "
-                                           "არსებობს, ჩვენი პრიორიტეტია "
-                                           "რეიჯის 1.1 ვერსია გამოვიდეს.")
+                await message.channel.send("Woah, what?")
 
     async def on_member_join(self, member):
         member = member
-        embed = discord.Embed(title="მოგესალმებით Hype Roleplay სერვერზე!")
-        embed.add_field(name="რა არის Hype Roleplay?",
+        embed = discord.Embed(title="Welcome to Liberty City Roleplay!")
+        embed.add_field(name="What is Liberty City Roleplay?",
                         value=str(components.welcome_line), inline=False)
-        embed.add_field(name="ფორუმის ლინკი",
-                        value="https://hype.ge/", inline=False)
+        embed.add_field(name="Forums",
+                        value="https://lcroleplay.com/", inline=False)
         await member.send(embed=embed)
 
 
