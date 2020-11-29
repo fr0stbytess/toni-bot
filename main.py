@@ -158,7 +158,7 @@ class Application(discord.Client):
             else:
                 await message.channel.send("Error occured. No digits?")
 
-        keywords = ["სერვერი როდის იხსნება", "serveri rodis ixsneba", "rodis",
+        keywords = ["სერვერი როდის იხსნება", "serveri rodis ixsneba",
                     "როდის იხსნება სერვერი", "როდის იხსნება", "მალე გაიხსნება",
                     "მალე გახსნით", "ამთვეში გაიხსნება",
                     "სერვერს მალე გახსნით", "რამდენი გელოდოთ", "rodis ixsneba",
