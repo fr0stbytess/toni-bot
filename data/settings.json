@@ -1,8 +1,8 @@
 {
-    "app_name": "Claude",
-    "app_version": "0.1.4",
-    "default_activity": "LCRP v0.0.1",
-    "last_activity": "Playing with frosty!",
+    "app_name": "Toni",
+    "app_version": "0.1.5",
+    "default_activity": "UGMP coming on 25th!",
+    "last_activity": "",
     "perms": [
         "0001",
         "7776",
