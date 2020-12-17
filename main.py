@@ -2,11 +2,10 @@
    Claude."""
 
 import json
-
 import discord
 import requests as r
-from geopy.geocoders import Nominatim
 
+from geopy.geocoders import Nominatim
 from modules import components
 
 try:
@@ -14,6 +13,9 @@ try:
         data = json.load(f)
 except Exception as e:
     print("Error:", e)
+
+intents = discord.Intents.default()
+intents.members = True
 
 
 class Application(discord.Client):
@@ -54,7 +56,7 @@ class Application(discord.Client):
             with open("data/weather.json", "r+") as weather:
                 weather_data = json.load(weather)
             await message.channel.send(
-                "Ingame weather right now: {}".format(
+                "Current Liberty City weather: {}".format(
                     weather_data["currently"]["summary"]
                 ))
 
@@ -172,5 +174,5 @@ class Application(discord.Client):
         await member.send(embed=embed)
 
 
-claude = Application()
+claude = Application(intents=intents)
 claude.run(data["token"])
