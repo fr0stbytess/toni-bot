@@ -139,7 +139,7 @@ class Application(discord.Client):
         if message.content.startswith("!say"):
             content = message.content
             process_message = str(content).replace("!say", "").strip()
-            channel = toni.get_channel(738828483274342441)
+            channel = toni.get_channel(657190919535329340)
             await channel.send(process_message)
 
         if message.content.startswith("!kick"):
