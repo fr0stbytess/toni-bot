@@ -166,12 +166,18 @@ class Application(discord.Client):
 
     async def on_member_join(self, member):
         member = member
+        logs_channel = claude.get_channel(788941431279845440)
         embed = discord.Embed(title="Welcome to Liberty City Roleplay!")
         embed.add_field(name="What is Liberty City Roleplay?",
                         value=str(components.welcome_line), inline=False)
         embed.add_field(name="Forums",
                         value="https://lcroleplay.com/", inline=False)
-        await member.send(embed=embed)
+        try:
+            await member.send(embed=embed)
+            await logs_channel.send("Welcome message succesfully sent to: {}"
+                                    "".format(member))
+        except Exception as e:
+            await logs_channel.send("Failed to send the message: {}".format(e))
 
 
 claude = Application(intents=intents)
