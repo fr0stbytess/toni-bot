@@ -26,7 +26,7 @@ class Application(discord.Client):
         try:
             game = discord.Game(data["default_activity"])
             status = discord.Status.idle
-            await claude.change_presence(status=status, activity=game)
+            await toni.change_presence(status=status, activity=game)
         except Exception as e:
             print("something went wrong:", e)
             exit()
@@ -63,7 +63,7 @@ class Application(discord.Client):
         if message.content.startswith("!activity"):
             activity = str(message.content).replace("!activity", "").strip()
             author = str(message.author)
-            channel_id = claude.get_channel(782358704438640691)
+            channel_id = toni.get_channel(788941431279845440)
             with open("data/settings.json", "r") as f:
                 data = json.load(f)
                 data["last_activity"] = activity
@@ -75,7 +75,7 @@ class Application(discord.Client):
                     if perm in author:
                         status = discord.Status.idle
                         activity = discord.Game(data["last_activity"])
-                        await claude.change_presence(status=status,
+                        await toni.change_presence(status=status,
                                                      activity=activity)
                         await channel_id.send(
                             "New activity: `{}`. Edited by: `{}`".format(
@@ -139,13 +139,13 @@ class Application(discord.Client):
         if message.content.startswith("!say"):
             content = message.content
             process_message = str(content).replace("!say", "").strip()
-            channel = claude.get_channel(738828483274342441)
+            channel = toni.get_channel(738828483274342441)
             await channel.send(process_message)
 
         if message.content.startswith("!kick"):
             content = message.content
             author = message.author
-            channel = claude.get_channel(782358704438640691)
+            channel = claude.get_channel(657190919535329340)
             process_message = str(content).replace("!kick", "").strip()
             if components.check_digits(content):
                 try:
@@ -166,7 +166,7 @@ class Application(discord.Client):
 
     async def on_member_join(self, member):
         member = member
-        logs_channel = claude.get_channel(788941431279845440)
+        logs_channel = toni.get_channel(788941431279845440)
         embed = discord.Embed(title="Welcome to Liberty City Roleplay!")
         embed.add_field(name="What is Liberty City Roleplay?",
                         value=str(components.welcome_line), inline=False)
@@ -180,5 +180,5 @@ class Application(discord.Client):
             await logs_channel.send("Failed to send the message: {}".format(e))
 
 
-claude = Application(intents=intents)
-claude.run(data["token"])
+toni = Application(intents=intents)
+toni.run(data["token"])
