@@ -158,6 +158,17 @@ class Application(discord.Client):
             channel = toni.get_channel(657190919535329340)
             await channel.send(process_message)
 
+        if message.content.startswith("!approve"):
+            content = message.content
+            author = message.author
+            process_message = str(content).replace("!approve", "").strip()
+            approved_channel_log = toni.get_channel(797577949104439327)
+            try:
+                approval_query = ("UPDATE `samp_users` SET `activated` = '1' WHERE `samp_users`.`user` = {};".format(process_message))
+                await approved_channel_log.send("{} has been approved by staff member {}".format(process_message, author))
+            except Exception as e:
+                await approved_channel_log("Could not approve the member! Error:", e)
+
         if message.content.startswith("!kick"):
             content = message.content
             author = message.author
