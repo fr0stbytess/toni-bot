@@ -4,6 +4,7 @@
 import json
 import discord
 import requests as r
+import mysql.connector as connector
 
 from geopy.geocoders import Nominatim
 from modules import components
@@ -13,6 +14,20 @@ try:
         data = json.load(f)
 except Exception as e:
     print("Error:", e)
+
+try:
+    connection = connector.connect(
+        host="localhost",
+        port=3306,
+        user="root",
+        password="")
+    cursor = connection.cursor()
+    print("Connection to the database succesfully established.")
+except Exception as e:
+    print("Connection to the database failed: .", e)
+
+
+
 
 intents = discord.Intents.default()
 intents.members = True
