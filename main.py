@@ -164,10 +164,12 @@ class Application(discord.Client):
             process_message = str(content).replace("!approve", "").strip()
             approved_channel_log = toni.get_channel(797577949104439327)
             try:
-                approval_query = ("UPDATE `samp_users` SET `activated` = '1' WHERE `samp_users`.`user` = {};".format(process_message))
+                approval_query = "UPDATE samp_users SET activated = '1' WHERE samp_users.user = '" + str(process_message)+"'"
+                cursor.execute(approval_query)
                 await approved_channel_log.send("{} has been approved by staff member {}".format(process_message, author))
+                connection.commit()
             except Exception as e:
-                await approved_channel_log("Could not approve the member! Error:", e)
+                await approved_channel_log.send("Could not approve the member! Error: {}".format(e))
 
         if message.content.startswith("!kick"):
             content = message.content
