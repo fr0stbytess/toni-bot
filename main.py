@@ -20,7 +20,8 @@ try:
         host="localhost",
         port=3306,
         user="root",
-        password="")
+        password="",
+        database="lcrp")
     cursor = connection.cursor()
     print("Connection to the database succesfully established.")
 except Exception as e:
