@@ -160,21 +160,32 @@ class Application(discord.Client):
 
         if message.content.startswith("!approve"):
             approval_channel = toni.get_channel(798574202932035654)
+            content = message.content
+            author = message.author
+            message_id = message.id
             if message.channel == approval_channel:
-                content = message.content
-                author = message.author
                 process_message = str(content).replace("!approve", "").strip()
                 approved_channel_log = toni.get_channel(797577949104439327)
                 try:
                     approval_query = "UPDATE samp_users SET activated = '1' WHERE samp_users.user = '" + str(process_message)+"'"
                     cursor.execute(approval_query)
-                    await approved_channel_log.send("{} has been approved by staff member {}".format(process_message, author))
+                    embed_app = discord.Embed(title="Approved Character",
+                                          description="A character has been approved by a staff member.",
+                                          color=0x83602f)
+                    embed_app.add_field(name="Character name:", value=str(process_message),
+                                    inline=False)
+                    embed_app.add_field(name="Approved by:", value=str(author),
+                                    inline=True)
+                    embed_app.set_footer(text="Powered by Toni the bot!")
+                    embed_app.set_thumbnail(url="https://i.imgur.com/JoUgJ4m.png")
+                    await approved_channel_log.send(embed=embed_app)
                     connection.commit()
                 except Exception as e:
                     await approved_channel_log.send("Could not approve the member! Error: {}".format(e))
             else:
                 await message.channel.send("Please use the correct channel "
                                            "for that.")
+            await message.delete()
 
         if message.content.startswith("!kick"):
             content = message.content
