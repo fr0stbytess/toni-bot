@@ -159,26 +159,31 @@ class Application(discord.Client):
             await channel.send(process_message)
 
         if message.content.startswith("!approve"):
-            content = message.content
-            author = message.author
-            process_message = str(content).replace("!approve", "").strip()
-            approved_channel_log = toni.get_channel(797577949104439327)
-            try:
-                approval_query = "UPDATE samp_users SET activated = '1' WHERE samp_users.user = '" + str(process_message)+"'"
-                cursor.execute(approval_query)
-                await approved_channel_log.send("{} has been approved by staff member {}".format(process_message, author))
-                connection.commit()
-            except Exception as e:
-                await approved_channel_log.send("Could not approve the member! Error: {}".format(e))
+            approval_channel = toni.get_channel(798574202932035654)
+            if message.channel == approval_channel:
+                content = message.content
+                author = message.author
+                process_message = str(content).replace("!approve", "").strip()
+                approved_channel_log = toni.get_channel(797577949104439327)
+                try:
+                    approval_query = "UPDATE samp_users SET activated = '1' WHERE samp_users.user = '" + str(process_message)+"'"
+                    cursor.execute(approval_query)
+                    await approved_channel_log.send("{} has been approved by staff member {}".format(process_message, author))
+                    connection.commit()
+                except Exception as e:
+                    await approved_channel_log.send("Could not approve the member! Error: {}".format(e))
+            else:
+                await message.channel.send("Please use the correct channel "
+                                           "for that.")
 
         if message.content.startswith("!kick"):
             content = message.content
             author = message.author
-            channel = claude.get_channel(657190919535329340)
+            channel = toni.get_channel(657190919535329340)
             process_message = str(content).replace("!kick", "").strip()
             if components.check_digits(content):
                 try:
-                    kick = claude.get_user(int(process_message))
+                    kick = toni.get_user(int(process_message))
                     await message.guild.kick(kick)
                     await channel.send(
                         "KICK LOG: {} was kicked by: {}.".format(kick, author))
