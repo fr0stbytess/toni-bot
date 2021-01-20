@@ -222,7 +222,7 @@ class Application(discord.Client):
             await logs_channel.send("Welcome message succesfully sent to: {}"
                                     "".format(member))
         except Exception as e:
-            await logs_channel.send("Failed to send the message: {} : {}".format(member, e))
+            await logs_channel.send("Failed to send the message: {} : {}.".format(member, e))
 
 
 toni = Application(intents=intents)
