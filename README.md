@@ -1,2 +1,2 @@
 # toni-bot
- Discord bot named "Claude", created for UGMP (Underground Multiplayer)'s project LCRP (Liberty City Roleplay)'s community
+ Discord bot named "Toni", created for UGMP (Underground Multiplayer)'s project LCRP (Liberty City Roleplay)'s community
